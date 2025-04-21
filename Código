@@ -1,0 +1,73 @@
+CREATE:
+
+// Valor que a logo usará para se mover nos dois eixos
+eixo_x = 2.5
+eixo_y = 2.5
+
+
+// Verificadores
+cor_atual = c_white
+cor_escolhida = noone
+
+// Cores possíveis 
+azul = c_blue
+verde = c_green
+laranja = c_orange
+
+STEP:
+
+// X se movendo para a direita de 2.5 a 2.5 pixels (positivo)
+x += eixo_x
+
+// Y se movendo para baixo de 2.5 a 2.5 pixels (positivo)
+y += eixo_y
+
+// Se o Y do sprite for maior que a altura da sala (com a linha de gatilho começando 64 pixels antes) ou se o Y do sprite for menor que a posição 64 da sala
+if (y > room_height - 64 or y < 65)
+{
+     // A direção do eixo Y do sprite inverte
+     eixo_y = -eixo_y
+     image_blend = cor_escolhida
+     cor_atual = cor_escolhida
+}
+
+// Aqui, aplica-se a mesma explicação 
+if (x > room_width - 72 or x < 78)
+{
+     eixo_x = -eixo_x
+     image_blend = cor_escolhida
+     cor_atual = cor_escolhida
+}
+
+// A verificação junto dos cálculos só roda ENQUANTO o sprite não estiver colidindo com NENHUMA das extremidades 
+if (x != 80 or x != 1140 && cor_atual = c_white)
+
+{
+    // As três opções de cores estão disponíveis porque o sprite começa inicialmente branco
+    cor_escolhida = choose(azul, verde, laranja)
+}
+
+// Se a cor for azul,
+if (cor_atual = azul)
+{
+    // É retirado o azul da lista do choose
+    cor_escolhida = choose(verde, laranja)
+}
+
+// Se for verde,
+if (cor_atual = verde)
+{
+    // É retirado o verde da lista do choose 
+    cor_escolhida = choose(azul, laranja)
+}
+
+// E assim por diante
+if (cor_atual = laranja)
+{
+    cor_escolhida = choose(azul, verde)
+}
+
+// Debug
+
+show_debug_message(cor_escolhida)
+show_debug_message(image_blend)
